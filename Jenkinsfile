@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        // Define any environment variables you may need
-        // Example: JAVA_HOME = '/path/to/your/java/home'
+        // Define environment variables if needed
+        // Example: MY_ENV_VARIABLE = 'some value'
     }
 
     stages {
@@ -16,58 +16,89 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Build your Java project using Maven
-                sh 'mvn clean install'
+                // Build your Java project here using Maven
+                script {
+                    def mvnHome = tool name: 'Maven', type: 'hudson.tasks.Maven$MavenInstallation'
+                    if (isUnix()) {
+                        sh "${mvnHome}/bin/mvn clean install"
+                    } else {
+                        bat "${mvnHome}\\bin\\mvn clean install"
+                    }
+                }
             }
         }
 
         stage('Unit Tests') {
             steps {
-                // Run unit tests
-                sh 'mvn test'
+                // Run unit tests using Maven
+                script {
+                    def mvnHome = tool name: 'Maven', type: 'hudson.tasks.Maven$MavenInstallation'
+                    if (isUnix()) {
+                        sh "${mvnHome}/bin/mvn test -Punit-tests"
+                    } else {
+                        bat "${mvnHome}\\bin\\mvn test -Punit-tests"
+                    }
+                }
             }
         }
 
         stage('Smoke Tests') {
             steps {
-                // Run smoke tests (if applicable)
-                // You may replace this with your specific smoke testing command
-                sh 'mvn verify -Psmoke-tests'
+                // Run smoke tests using Maven
+                script {
+                    def mvnHome = tool name: 'Maven', type: 'hudson.tasks.Maven$MavenInstallation'
+                    if (isUnix()) {
+                        sh "${mvnHome}/bin/mvn test -Psmoke-tests"
+                    } else {
+                        bat "${mvnHome}\\bin\\mvn test -Psmoke-tests"
+                    }
+                }
             }
         }
 
         stage('Integration Tests') {
             steps {
-                // Run integration tests (if applicable)
-                // You may replace this with your specific integration testing command
-                sh 'mvn verify -Pintegration-tests'
+                // Run integration tests using Maven
+                script {
+                    def mvnHome = tool name: 'Maven', type: 'hudson.tasks.Maven$MavenInstallation'
+                    if (isUnix()) {
+                        sh "${mvnHome}/bin/mvn test -Pintegration-tests"
+                    } else {
+                        bat "${mvnHome}\\bin\\mvn test -Pintegration-tests"
+                    }
+                }
             }
         }
 
         stage('End-to-End Tests') {
             steps {
-                // Run end-to-end tests (if applicable)
-                // You may replace this with your specific E2E testing command
-                sh 'mvn verify -Pe2e-tests'
+                // Run end-to-end tests using Maven
+                script {
+                    def mvnHome = tool name: 'Maven', type: 'hudson.tasks.Maven$MavenInstallation'
+                    if (isUnix()) {
+                        sh "${mvnHome}/bin/mvn test -PEnd-to-End-tests"
+                    } else {
+                        bat "${mvnHome}\\bin\\mvn test -PEnd-to-End-tests"
+                    }
+                }
             }
         }
 
         stage('Deploy') {
             steps {
-                // Deploy your application (if applicable)
-                // You may replace this with your specific deployment steps
+                // Deploy your application here (if applicable)
+                // Define deployment steps
             }
         }
     }
 
     post {
         success {
-            // Define post-build actions on success
-            // Example: Send notifications, archive artifacts, etc.
+            // Define post-success actions, if needed
         }
+
         failure {
-            // Define post-build actions on failure
-            // Example: Send notifications, report failures, etc.
+            // Define post-failure actions, if needed
         }
     }
 }
