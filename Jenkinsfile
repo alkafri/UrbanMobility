@@ -84,12 +84,12 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-            steps {
+        //stage('Deploy') {
+            //steps {
                 // Deploy your application here (if applicable)
                 // Define deployment steps
-            }
-        }
+            //}
+        //}
     }
 
     post {
