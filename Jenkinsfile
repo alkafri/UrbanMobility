@@ -194,7 +194,7 @@ pipeline {
         }
 
         failure {
-            echo 'Build succeeded! Congratulations!'
+            echo 'Build Faild! Sorry!'
         }
     }
 }
@@ -202,8 +202,7 @@ pipeline {
         }
 
         failure {
-            // Define post-failure actions, if needed
-            // Example: Send notifications or generate reports
+             echo 'Build FAILD!!'
         }
     }
 }
