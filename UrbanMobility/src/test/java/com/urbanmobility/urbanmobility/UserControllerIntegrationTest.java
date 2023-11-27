@@ -22,8 +22,6 @@ public class UserControllerIntegrationTest {
     @MockBean
     private UserService userService; // Mock the UserService
 
-
-
     @Test
     public void testUserInformationSaveToDatabase() throws Exception {
         // Define mock behavior for UserService
