@@ -1,11 +1,10 @@
-package com.urbanmobility.urbanmobility;
-
 import com.urbanmobility.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -23,15 +22,15 @@ public class EndToEndTest {
     private UserService userService; // Mock the UserService
 
     @Test
-    public void testEndToEndScenario() throws Exception {
+    public void testCreateBookingEndToEnd() throws Exception {
         // Define mock behavior for UserService
         when(userService.someUserServiceMethod()).thenReturn("Mocked UserService Result");
 
-        // Perform an HTTP GET request to your application's endpoint
-        mockMvc.perform(MockMvcRequestBuilders.get("/your-endpoint"))
+        // Perform an HTTP POST request to create a booking
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/bookings")
+                .content("{ \"user\": {\"id\": 1}, \"departurePlace\": \"A\", \"arrivalPlace\": \"B\", \"transportationType\": \"Bus\", \"estimatedDeparture\": \"2023-12-01T12:00:00\", \"estimatedArrival\": \"2023-12-01T14:00:00\", \"price\": 20.0 }")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("Expected Response"));
-
-        // Add your assertions here for the end-to-end scenario
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists()); // Check if the returned booking has an ID
     }
 }

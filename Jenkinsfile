@@ -15,10 +15,10 @@ pipeline {
                     def mavenCommand = isUnix() ? "${mvnHome}/bin/mvn" : "${mvnHome}\\bin\\mvn"
 
                     // Build and run tests for each profile
-                    def profiles = ['unit-tests', 'smoke-tests', 'integration-tests', 'End-to-End-tests']
+                    def profiles = ['unit-tests', 'smoke-tests', 'integration-tests', 'end-to-end-tests']
 
                     for (profile in profiles) {
-                        sh "${mavenCommand} clean install -P${profile}"
+                        sh "${mavenCommand} clean test -P${profile}"
                     }
                 }
             }
@@ -26,8 +26,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                // Deploy your application here (if applicable)
-                // Define deployment steps
+                // Ddeployment steps
             }
         }
     }

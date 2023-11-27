@@ -22,16 +22,23 @@ public class UserControllerIntegrationTest {
     @MockBean
     private UserService userService; // Mock the UserService
 
+
+
     @Test
-    public void testUserControllerInteraction() throws Exception {
+    public void testUserInformationSaveToDatabase() throws Exception {
         // Define mock behavior for UserService
-        when(userService.someUserServiceMethod()).thenReturn("Mocked UserService Result");
+        when(userService.createUser(any(User.class))).thenReturn(new User(/* Your mock user data */));
 
-        // Perform an HTTP GET request to the UserController endpoint
-        mockMvc.perform(MockMvcRequestBuilders.get("/user-endpoint"))
+        // Perform an HTTP POST request to save user information
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/users")
+                .content("{...}") // Your user information payload
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("Expected Response"));
-
-        // Add your assertions here
+                .andExpect(jsonPath("$.id").exists()) // Check if the returned user has an ID
+                .andExpect(jsonPath("$.username").value("testUser")) // Adjust as per your mock user data
+                .andExpect(jsonPath("$.contactInformation").value("test@example.com"))
+                .andExpect(jsonPath("$.paymentInformation").value("1234567890"))
+                .andExpect(jsonPath("$.paymentHistory").doesNotExist()); // Assuming paymentHistory is initially null
     }
+
 }
