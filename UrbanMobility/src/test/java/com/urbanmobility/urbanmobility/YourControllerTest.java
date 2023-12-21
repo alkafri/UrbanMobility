@@ -23,7 +23,6 @@ public class YourControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    // Inject mock beans for services or components here
     @MockBean
     private MockService paymentService;
 
@@ -32,15 +31,12 @@ public class YourControllerTest {
 
     @Test
     public void testYourControllerEndpoint() throws Exception {
-        // Mock the behavior of the injected mock services using Mockito
         when(paymentService.mockMethod(anyString())).thenReturn("Mock Payment Processed");
         when(transportationService.mockMethod(anyString())).thenReturn("Mock Transportation Booked");
 
-        // Perform HTTP requests and assertions using mockMvc
         mockMvc.perform(get("/your-endpoint"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Expected Response"));
 
-        // Add your assertions here
     }
 }
