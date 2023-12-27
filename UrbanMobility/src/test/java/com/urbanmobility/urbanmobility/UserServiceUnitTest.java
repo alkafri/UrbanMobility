@@ -16,20 +16,16 @@ public class UserServiceTest {
     private UserService userService;
 
     @Mock
-    private UserRepository userRepository; // Mock the UserRepository
+    private UserRepository userRepository;
 
     @Test
     public void testSomeUserServiceMethod() {
-        // Initialize mocks
         MockitoAnnotations.initMocks(this);
 
-        // Define mock behavior for UserRepository
         when(userRepository.someUserRepositoryMethod()).thenReturn("Mocked UserRepository Result");
 
-        // Call the method you want to test in UserService
         String result = userService.someUserServiceMethod();
 
-        // Assert the result
         assertEquals("Expected Result", result);
     }
 }

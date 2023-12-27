@@ -21,18 +21,15 @@ public class UserControllerUnitTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private UserService userService; // Mock the UserService
+    private UserService userService; 
 
     @Test
     public void testUserControllerEndpoint() throws Exception {
-        // Define mock behavior for UserService
         when(userService.someUserServiceMethod()).thenReturn("Mocked UserService Result");
 
-        // Perform an HTTP GET request to the UserController endpoint
         mockMvc.perform(get("/user-endpoint"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Expected Response"));
 
-        // Add your assertions here
     }
 }

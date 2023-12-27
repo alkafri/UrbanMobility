@@ -20,11 +20,10 @@ public class UserControllerIntegrationTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private UserService userService; // Mock the UserService
+    private UserService userService; 
 
     @Test
     public void testUserInformationSaveToDatabase() throws Exception {
-        // Define mock behavior for UserService
         when(userService.createUser(any(User.class))).thenReturn(new User(/* Your mock user data */));
 
         // Perform an HTTP POST request to save user information

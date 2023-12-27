@@ -17,7 +17,6 @@ public class UserServiceTest {
 
         UserService userService = new UserService(userRepository);
 
-        // Call the method you want to test
         String result = userService.createUser();
 
         assertEquals("Expected Result", result);

@@ -1,5 +1,5 @@
 /* 
-The test is verifying that the Spring application context loads without errors.
+* This test is verifying that the Spring application context loads without errors.
 */ 
 
 package com.urbanmobility.urbanmobility;
